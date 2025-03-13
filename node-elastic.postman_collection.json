@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "2c202701-5cb2-4700-a403-2ae1252ae9d9",
+		"name": "node-elastic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24524327"
+	},
+	"item": [
+		{
+			"name": "add elastic bulk product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"index\": { \"_id\": 1 } }\n{ \"name\": \"iPhone 15 Pro\", \"brand\": \"Apple\", \"price\": 1299, \"category\": \"smartphone\", \"stock\": 50 }\n{ \"index\": { \"_id\": 2 } }\n{ \"name\": \"Samsung Galaxy S24\", \"brand\": \"Samsung\", \"price\": 1199, \"category\": \"smartphone\", \"stock\": 30 }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/products/_bulk"
+			},
+			"response": []
+		},
+		{
+			"name": "add elastic 1 product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"index\": { \"_id\": 1 } }\n{ \"name\": \"iPhone 15 Pro\", \"brand\": \"Apple\", \"price\": 1299, \"category\": \"smartphone\", \"stock\": 50 }\n{ \"index\": { \"_id\": 2 } }\n{ \"name\": \"Samsung Galaxy S24\", \"brand\": \"Samsung\", \"price\": 1199, \"category\": \"smartphone\", \"stock\": 30 }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/products/_doc/1"
+			},
+			"response": []
+		},
+		{
+			"name": "search elastic 1 product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/products/_doc/1"
+			},
+			"response": []
+		},
+		{
+			"name": "search elastic all products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"index\": { \"_id\": 1 } }\n{ \"name\": \"iPhone 15 Pro\", \"brand\": \"Apple\", \"price\": 1299, \"category\": \"smartphone\", \"stock\": 50 }\n{ \"index\": { \"_id\": 2 } }\n{ \"name\": \"Samsung Galaxy S24\", \"brand\": \"Samsung\", \"price\": 1199, \"category\": \"smartphone\", \"stock\": 30 }\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/products/_doc/1"
+			},
+			"response": []
+		},
+		{
+			"name": "get search suggestion from backend",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/suggest?q=iPh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"suggest"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "iPh"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
