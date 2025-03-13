@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/19</span>
+                <span class='fraction'>20/21</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">87.5% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
@@ -96,7 +96,12 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -105,13 +110,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,49 +126,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
-const { Client } = require('@elastic/elasticsearch');
-const cors = require('cors');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require("express");
+const { Client } = require("@elastic/elasticsearch");
+const cors = require("cors");
 &nbsp;
 const app = express();
 app.use(cors());
 app.use(express.json());
 &nbsp;
-const esClient = new Client({ node: process.env.ELASTICSEARCH_URL || 'http://localhost:9200' });
-&nbsp;
-app.get('/suggest', async (req, res) =&gt; {
-    const query = req.query.q;
-    if (!query) return res.status(500).json([]);
-&nbsp;
-    try {
-        const { hits } = await esClient.search({
-            index: 'products',
-            body: {
-                query: {
-                    match_phrase_prefix: { name: query }
-                }
-            }
-        });
-&nbsp;
-        res.json(hits.hits.map(hit =&gt; hit._source.name));
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: error.message });</span>
-    }
+const esClient = new Client({
+  node: process.env.ELASTICSEARCH_URL || "http://localhost:9200",
 });
 &nbsp;
-app.listen(3000, <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >console.log('Server running on port 3000'))</span>;
+app.get("/suggest", async (req, res) =&gt; {
+  const query = req.query.q;
+  if (!query) return res.status(500).json([]);
 &nbsp;
-module.exports = { app };
+  try {
+    const { hits } = await esClient.search({
+      index: "products",
+      body: {
+        query: {
+          match_phrase_prefix: { name: query },
+        },
+      },
+    });
+    res.json(hits.hits.map((hit) =&gt; hit._source.name));
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: error.message });</span>
+  }
+});
+&nbsp;
+const port = process.env.NODE_ENV === 'test' ? 3009 : <span class="branch-1 cbranch-no" title="branch not covered" >3008;</span>
+const server = app.listen(port, () =&gt; {
+  console.log(`Server is running on port ${port}`);
+  console.log(`Elasticsearch is connected to ${process.env.ELASTICSEARCH_URL || "http://localhost:9200"}`);
+});
+&nbsp;
+module.exports = { app, server };
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -169,7 +184,7 @@ module.exports = { app };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-03-13T11:45:39.608Z
+                at 2025-03-13T12:25:55.118Z
             </div>
         <script src="prettify.js"></script>
         <script>

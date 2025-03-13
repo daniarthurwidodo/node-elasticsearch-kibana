@@ -23,15 +23,16 @@ app.get("/suggest", async (req, res) => {
         },
       },
     });
-    console.log(hits.total);
-    console.log(hits);
-    if (hits.total === 0) return res.status(500).json([]);
     res.json(hits.hits.map((hit) => hit._source.name));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+const port = process.env.NODE_ENV === 'test' ? 3009 : 3008;
+const server = app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+  console.log(`Elasticsearch is connected to ${process.env.ELASTICSEARCH_URL || "http://localhost:9200"}`);
+});
 
-module.exports = { app };
+module.exports = { app, server };
