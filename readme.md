@@ -115,7 +115,7 @@ PORT=3008
 
 ## Project Structure
 
-```
+```text
 ├── server.js           # Main application entry point
 ├── elasticsearch.js    # Elasticsearch client configuration
 ├── docker-compose.yml  # Docker services configuration
