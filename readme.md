@@ -1,6 +1,6 @@
 # Search Suggestion API with Elasticsearch
 
-This project implements a search suggestion API using Node.js, Express, and Elasticsearch.
+This project implements a search suggestion API using Node.js, Express, and Elasticsearch with a web-based search interface.
 
 ## Prerequisites
 
@@ -32,9 +32,27 @@ node server.js
 
 The services will be available at:
 
+- Web UI: <http://localhost:3008>
 - Elasticsearch: <http://localhost:9200>
 - Kibana: <http://localhost:5601>
-- Backend API: <http://localhost:3000>
+
+## Features
+
+- Real-time search suggestions as you type
+- Clean and responsive web interface
+- RESTful API endpoints
+- Elasticsearch integration
+- Docker support
+
+## Web Interface
+
+The application includes a web-based search interface that allows users to:
+
+- Search products in real-time
+- See instant suggestions as they type
+- View matching product results
+
+Access the web interface at: <http://localhost:3008>
 
 ## API Endpoints
 
@@ -49,7 +67,7 @@ Query Parameters:
 Example Request:
 
 ```sh
-curl "http://localhost:3000/suggest?q=iPh"
+curl "http://localhost:3008/suggest?q=iPh"
 ```
 
 Example Response:
@@ -86,7 +104,7 @@ Create a `.env` file in the root directory:
 
 ```sh
 ELASTICSEARCH_URL=http://localhost:9200
-PORT=3000
+PORT=3008
 ```
 
 ### Available Scripts
@@ -101,16 +119,18 @@ PORT=3000
 ├── server.js           # Main application entry point
 ├── elasticsearch.js    # Elasticsearch client configuration
 ├── docker-compose.yml  # Docker services configuration
+├── public/            # Static files for web interface
+│   └── index.html     # Search interface
 ├── __tests__/         # Test files
 └── README.md          # Project documentation
 ```
 
 ## Technology Stack
 
-- Node.js
-- Express
+- Node.js with Express
 - Elasticsearch 8.12.0
 - Kibana 8.12.0
+- HTML/CSS/JavaScript (Frontend)
 - Jest (Testing)
 - Docker & Docker Compose
 
