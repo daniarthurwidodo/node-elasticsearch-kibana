@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .search-container {
+            margin: 20px 0;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Search</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Start typing to search products...">
+    </div>
+    <div id="results"></div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+
+        let timeoutId;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                const query = e.target.value;
+                if (query.length > 0) {
+                    fetch(`/suggest?q=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            resultsDiv.innerHTML = data.length > 0 
+                                ? data.map(item => `<div class="result-item">${item}</div>`).join('')
+                                : '<div class="result-item">No results found</div>';
+                        })
+                        .catch(error => {
+                            resultsDiv.innerHTML = `<div class="result-item">Error: ${error.message}</div>`;
+                        });
+                } else {
+                    resultsDiv.innerHTML = '';
+                }
+            }, 300);
+        });
+    </script>
+</body>
+</html>

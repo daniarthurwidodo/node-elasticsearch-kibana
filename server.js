@@ -1,13 +1,19 @@
 const express = require("express");
 const { Client } = require("@elastic/elasticsearch");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const esClient = new Client({
   node: process.env.ELASTICSEARCH_URL || "http://localhost:9200",
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get("/suggest", async (req, res) => {
@@ -32,6 +38,7 @@ app.get("/suggest", async (req, res) => {
 const port = process.env.NODE_ENV === 'test' ? 3009 : 3008;
 const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log(`Web UI is available at http://localhost:${port}`);
   console.log(`Elasticsearch is connected to ${process.env.ELASTICSEARCH_URL || "http://localhost:9200"}`);
 });
 
